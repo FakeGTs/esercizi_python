@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio 1</title>
+
+    <style>
+        table,
+        th,
+        tr,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form id="form">
+
+        <table id="risultati">
+            <thead>
+                <tr>
+                    <th>Codice Cliente</th>
+                    <th>Titolo Del Libro</th>
+                    <th>Gironi di Prenotazione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><input type="number" id="codice" name="codice" placeholder="Codice Cliente" required></tr>
+                <tr><input type="text" id="titolo" name="titolo" placeholder="Titolo del Libro" required></tr>
+                <tr><input type="number" id="giorni" name="gionri" placeholder="Giorni di Prenotazione" required></tr>
+            </tbody>
+            <button type="button" id="calcola" onclick="AddBooking()">Calcola Importo</button>
+    </form>
+    </table>
+
+    <script>
+        let codiceUtente = document.getElementById("codice").value
+        let titoloLibro = document.getElementById("titolo").value
+        let giorniPrenotazione = document.getElementById("giorni").value
+        function AddBooking() {
+            if (validaForm) {
+                let tabella = "<table><tr><td>Codice Utente</td><td>Titolo Libro</td><td>Giorni Prenotazione</td></tr>"
+
+                function renderTable() {
+                    let clienti = []
+                    clienti.push({ codiceUtente, titoloLibro, giorniPrenotazione })
+                    
+                    for (let cliente of clienti) {
+                        tabella += `<tr><td>${cliente.codiceUtente}</td><td>${cliente.titoloLibro}</td><td>${cliente.giorniPrenotazione}</td>`
+                    }
+
+                    tabella += "</table>"
+                    document.getElementById("calcola").disable
+                }
+
+                function updateSummary() {
+                    let totalePrenotazioni = 0
+
+                    for (let cliente of clienti){
+
+                        if (codiceUtente == cliente.codiceUtente){
+                            totalePrenotazioni += cliente.giorniPrenotazione
+                        }
+
+                    }
+                    document.write("Totale dei giorni di prenotazione per l'utente " + codiceUtente + " :" + totalePrenotazioni)
+
+                }
+
+            }
+
+        }
+
+
+        function validaForm() {
+            if (codiceUtente == isNaN && codiceUtente == "" && codiceUtente <= 0 && titoloLibro == "" && giorniPrenotazione == isNaN && giorniPrenotazione == "" && giorniPrenotazione <= 0) {
+                alert("Dati inseriti errati o inesistenti")
+                return false
+            } else {
+                return true
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>
