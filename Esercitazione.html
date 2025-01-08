@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercitazione 08/01/25</title>
+
+    <style>
+        table,
+        td,
+        tr{
+            border: 1px, solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form">
+        <table>
+            <tr>
+                <td>Codice di prenotazione</td>
+                <td><input type="number" id="codice" placeholder="Codice di prenotazione" required></td>
+            </tr>
+            <tr>
+                <td>Numero di biglietti</td>
+                <td><input type="number" id="numeroB" min="1" max="100" placeholder="Numero di biglietti" required></td>
+            </tr>
+        </table>
+
+        <button type="button" id="btnAggiungi" onclick="aggiungiPrenotazione()">Aggiungi prenotazione</button>
+        <button type="button" id="btnMostra" onclick="mostraPrenotazioni()">Mostra prenotazioni</button>
+
+        <br>
+        <br>
+        <h2>Riepilogo prenotazioni</h2>
+        <div id="tabella"></div>
+        <br>
+        <br>
+        <h2>Prenotazioni con importo maggiore di 200 euro</h2>
+        <div id="tabella2"></div>
+    </form>
+
+    <script>
+        let tabella ="<table><tr><td>Codice</td><td>Numero di biglietti</td><td>Importo</td></tr>"
+
+        let tabella2 ="<table><tr><td>Codice</td><td>Numero di biglietti</td><td>Importo</td></tr>"
+
+        let prenotazioni=[]
+
+        function aggiungiPrenotazione(){
+            codicePrenotazione = document.getElementById("codice").value
+            numeroBiglietti = document.getElementById("numeroB").value
+            importo= calcolaImporto()
+
+            console.log("Codice di prenotazione: "+codicePrenotazione)
+            console.log("Numero di biglietti: "+numeroBiglietti)
+            console.log("Importo: "+importo)
+
+            if(!(isNaN(numeroBiglietti))){
+                prenotazioni.push({codicePrenotazione: codicePrenotazione, numeroBiglietti: numeroBiglietti, importo: importo})
+            }else{
+                alert("Numero biglietti non inserito")
+            }
+
+            function calcolaImporto(){
+                    let importoTot
+                    const costoB=20
+                    if(controllaCodice()== true){
+                        if(numeroBiglietti>=1 && numeroBiglietti<=4){
+                        importoTot= Number(costoB * numeroBiglietti)
+                        }else if(numeroBiglietti>=5 && numeroBiglietti<=9){
+                            importoTot= Number((costoB * numeroBiglietti)-((costoB * numeroBiglietti)*0.10))
+                        }else if(numeroBiglietti>=10){
+                            importoTot= Number((costoB * numeroBiglietti)-((costoB * numeroBiglietti)*0.20))
+                        }
+                        return importoTot
+                    }else{
+                        alert("Dati inseriti in modo errato")
+                    }
+            }
+
+            function controllaCodice(){
+                controllo = Number(codicePrenotazione)
+                if(controllo>0 && controllo!=null && Number.isInteger(controllo)){
+                    return true
+                }else{
+                    return false
+                }
+            }
+
+            document.getElementById("form").reset()
+        }
+
+
+        function mostraPrenotazioni(){
+            console.log("Array: ")
+            for(let prenotazione of prenotazioni){
+                console.log("Codice di prenotazione: "+prenotazione.codicePrenotazione)
+                console.log("Numero di biglietti: "+prenotazione.numeroBiglietti)
+                console.log("Importo: "+prenotazione.importo)
+            }
+
+            for(let prenotazione of prenotazioni){
+                if(prenotazione.importo!=null){
+                    tabella+= `<tr><td>${prenotazione.codicePrenotazione}</td><td>${prenotazione.numeroBiglietti}</td><td>${prenotazione.importo}</td></tr>`
+                }
+            }
+
+            for(let prenotazione of prenotazioni){
+                if(prenotazione.importo>=200){
+                    tabella2+= `<td>${prenotazione.codicePrenotazione}</td><td>${prenotazione.numeroBiglietti}<td>${prenotazione.importo}</td></tr>`
+                }
+            }
+            tabella+="</table>"
+            document.getElementById("tabella").innerHTML = tabella
+            tabella2+="</table>"
+            document.getElementById("tabella2").innerHTML = tabella2
+
+            document.getElementById("btnMostra").disabled= true
+        }
+
+    </script>
+</body>
+</html>
