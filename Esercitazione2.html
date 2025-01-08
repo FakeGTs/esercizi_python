@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function calcolaCassa(valoreIniziale, ...vendite) {
+            let totale = valoreIniziale;
+            for (let i = 0; i < vendite.length; i++) {
+                totale += vendite[i];
+            }
+            return totale;
+        }
+
+        let cassa = 100;
+
+        cassa = calcolaCassa(cassa, 10, 20, 30);
+        console.log("Valore attuale in cassa:", cassa); // Output: 160
+
+        cassa = calcolaCassa(cassa, 15, 5, 10);
+        console.log("Valore attuale in cassa:", cassa); // Output: 190
+
+        cassa = calcolaCassa(cassa, 50, 40);
+        console.log("Valore finale in cassa:", cassa); // Output: 280
+
+    </script>
+</body>
+
+</html>
